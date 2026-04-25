@@ -1,1 +1,60 @@
-write your laravel models, migrations commands
+# Profile — Quick Start Commands
+# Run these in order. After each step, copy generated files to your project repo.
+
+# ============================================================
+# STEP 1: Code Generation
+# Use make commands to generate skeletons for each layer.
+# ============================================================
+
+# Controller
+php artisan make:controller ProfileController
+
+# Model
+php artisan make:model Profile
+
+# Migration
+php artisan make:migration create_profiles_table
+
+# ============================================================
+# STEP 2: Move Generated Files
+# Laravel puts generated files in default locations.
+# Move them into the correct module folders before editing.
+# ============================================================
+
+# app/Http/Controllers/ProfileController.php  →  Profile/Apis/ProfileController.php
+# app/Models/Profile.php                      →  Profile/Models/Profile.php
+# database/migrations/..._create_profiles_table.php  →  Profile/Migrations/
+
+# ============================================================
+# STEP 3: Implement
+# Fill in each file following the rules in RULES.md.
+# ============================================================
+
+# Profile/Models/Profile.php         — fillable, casts, relationships
+# Profile/Repos/ProfileRepository.php     — Eloquent queries only
+# Profile/Services/ProfileService.php     — business logic, inject repo
+# Profile/Apis/                          — add external API clients if needed
+# Profile/Migrations/                    — implement up() and down()
+
+# ============================================================
+# STEP 4: Database Management
+# Run migrations and seed test data.
+# ============================================================
+
+# Run all pending migrations
+php artisan migrate
+
+# Seed test data (optional)
+php artisan db:seed --class=ProfileSeeder
+
+# ============================================================
+# STEP 5: Copy to Project Repo
+# Only copy reviewed, working code.
+# ============================================================
+
+# Checklist before copying:
+# [ ] Code reviewed and tested locally
+# [ ] Migration runs cleanly (php artisan migrate)
+# [ ] All down() methods implemented
+# [ ] No hardcoded credentials or .env values in code
+# [ ] Files placed in correct folder structure in target repo

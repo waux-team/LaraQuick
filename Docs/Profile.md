@@ -1,4 +1,4 @@
-# User Information System — Database Design Report
+# Profile Information System — Database Design Report
 
 ## Design Philosophy
 
