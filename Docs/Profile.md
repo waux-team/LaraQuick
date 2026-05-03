@@ -44,11 +44,11 @@ Contact data separated from identity so it can be updated independently and vers
 | Column | Type | Notes |
 |---|---|---|
 | contact_id | UUID | Primary key |
-| user_id | UUID | FK → users |
-| email | VARCHAR(255) | Unique, indexed, lowercased |
-| phone_number | VARCHAR(20) | E.164 format (+66812345678) |
-| email_verified | BOOLEAN | Default false |
-| phone_verified | BOOLEAN | Default false |
+| user_id | UUID | FK → users, nullable |
+| email | VARCHAR(255) | Unique, indexed, lowercased, nullable |
+| phone_number | VARCHAR(20) | E.164 format (+66812345678), nullable |
+| email_verified | BOOLEAN | Default false, nullable |
+| phone_verified | BOOLEAN | Default false, nullable |
 
 ---
 
@@ -59,11 +59,11 @@ Completely isolated from identity. Only the auth service touches this table.
 | Column | Type | Notes |
 |---|---|---|
 | credential_id | UUID | Primary key |
-| user_id | UUID | FK → users |
-| password_hash | VARCHAR(255) | bcrypt / argon2 hash only |
-| last_password_changed | TIMESTAMP | For expiry policies |
-| mfa_enabled | BOOLEAN | Two-factor flag |
-| mfa_secret | VARCHAR(100) | Encrypted at rest |
+| user_id | UUID | FK → users, nullable |
+| password_hash | VARCHAR(255) | bcrypt / argon2 hash only, nullable |
+| last_password_changed | TIMESTAMP | For expiry policies, nullable |
+| mfa_enabled | BOOLEAN | Two-factor flag, nullable |
+| mfa_secret | VARCHAR(100) | Encrypted at rest, nullable |
 
 ---
 
@@ -74,15 +74,15 @@ Supports multiple addresses per user (home, billing, shipping).
 | Column | Type | Notes |
 |---|---|---|
 | address_id | UUID | Primary key |
-| user_id | UUID | FK → users |
-| address_type | ENUM | 'home', 'billing', 'shipping' |
-| street_line_1 | VARCHAR(200) | — |
+| user_id | UUID | FK → users, nullable |
+| address_type | ENUM | 'home', 'billing', 'shipping', nullable |
+| street_line_1 | VARCHAR(200) | Nullable |
 | street_line_2 | VARCHAR(200) | Nullable |
-| city | VARCHAR(100) | — |
-| state_province | VARCHAR(100) | — |
-| postal_code | VARCHAR(20) | — |
-| country_code | CHAR(2) | ISO 3166-1 alpha-2 |
-| is_primary | BOOLEAN | Default false |
+| city | VARCHAR(100) | Nullable |
+| state_province | VARCHAR(100) | Nullable |
+| postal_code | VARCHAR(20) | Nullable |
+| country_code | CHAR(2) | ISO 3166-1 alpha-2, nullable |
+| is_primary | BOOLEAN | Default false, nullable |
 
 ---
 
@@ -93,14 +93,14 @@ Tracks active login sessions and device info.
 | Column | Type | Notes |
 |---|---|---|
 | session_id | UUID | Primary key |
-| user_id | UUID | FK → users |
-| ip_address | INET | IPv4 or IPv6 |
-| device_type | VARCHAR(50) | 'mobile', 'desktop', 'tablet' |
-| device_os | VARCHAR(50) | 'iOS', 'Android', 'Windows' |
-| browser | VARCHAR(100) | User-agent parsed |
-| created_at | TIMESTAMP | Login time |
-| expires_at | TIMESTAMP | TTL-based expiry |
-| revoked | BOOLEAN | For forced logout |
+| user_id | UUID | FK → users, nullable |
+| ip_address | INET | IPv4 or IPv6, nullable |
+| device_type | VARCHAR(50) | 'mobile', 'desktop', 'tablet', nullable |
+| device_os | VARCHAR(50) | 'iOS', 'Android', 'Windows', nullable |
+| browser | VARCHAR(100) | User-agent parsed, nullable |
+| created_at | TIMESTAMP | Login time, nullable |
+| expires_at | TIMESTAMP | TTL-based expiry, nullable |
+| revoked | BOOLEAN | For forced logout, nullable |
 
 ---
 
@@ -111,12 +111,12 @@ Stores coarse or precise location as runtime/GPS data — separate from postal a
 | Column | Type | Notes |
 |---|---|---|
 | location_id | UUID | Primary key |
-| user_id | UUID | FK → users |
-| latitude | DECIMAL(9,6) | — |
-| longitude | DECIMAL(9,6) | — |
+| user_id | UUID | FK → users, nullable |
+| latitude | DECIMAL(9,6) | Nullable |
+| longitude | DECIMAL(9,6) | Nullable |
 | accuracy_meters | INTEGER | Nullable |
-| recorded_at | TIMESTAMP | When captured |
-| source | ENUM | 'gps', 'ip', 'manual' |
+| recorded_at | TIMESTAMP | When captured, nullable |
+| source | ENUM | 'gps', 'ip', 'manual', nullable |
 
 ---
 
